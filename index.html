@@ -1,587 +1,286 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uriel Platini | Desarrollo Web a Medida</title>
-    <!-- Fuente moderna desde Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        /* CSS Variables para personalización fácil */
-        :root {
-            --bg-main: #0b0f19;
-            --bg-card: #131b2e;
-            --bg-card-hover: #1c2742;
-            --primary: #6366f1;
-            --primary-hover: #4f46e5;
-            --accent: #06b6d4;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --gradient-accent: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
-            --radius-lg: 16px;
-            --radius-md: 12px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uriel Garbagnate — Desarrollo Web a Medida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d1b2e;
+    --bg-line: rgba(148,180,214,0.10);
+    --panel:#122744;
+    --panel-hover:#16304f;
+    --ink:#eef3f8;
+    --muted:#93a8c3;
+    --accent:#f4a340;
+    --accent-soft: rgba(244,163,64,0.12);
+    --border: rgba(148,180,214,0.18);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      linear-gradient(var(--bg-line) 1px, transparent 1px) 0 0/40px 40px,
+      linear-gradient(90deg, var(--bg-line) 1px, transparent 1px) 0 0/40px 40px,
+      var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.01em;}
 
-        /* Reset global */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
+  /* --- corner registration marks, reused as a signature motif --- */
+  .plate{
+    position:relative;
+    border:1px solid var(--border);
+    background:var(--panel);
+    border-radius:4px;
+  }
+  .plate::before,.plate::after,
+  .plate .tl,.plate .tr{
+    content:"";
+    position:absolute;
+    width:10px;height:10px;
+    border-color:var(--accent);
+  }
+  .plate::before{top:-1px;left:-1px;border-top:2px solid var(--accent);border-left:2px solid var(--accent);}
+  .plate::after{bottom:-1px;right:-1px;border-bottom:2px solid var(--accent);border-right:2px solid var(--accent);}
 
-        html {
-            scroll-behavior: smooth;
-        }
+  .tag{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;color:var(--accent);
+    letter-spacing:0.06em;text-transform:uppercase;
+    padding:6px 12px;border:1px dashed var(--border);border-radius:99px;
+  }
+  .tag::before{content:"";width:6px;height:6px;background:var(--accent);border-radius:50%;}
 
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+  /* header */
+  header{padding:28px 0;border-bottom:1px solid var(--border);}
+  header .wrap{display:flex;justify-content:space-between;align-items:center;}
+  .brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem;}
+  .brand span{color:var(--accent);}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:13px 26px;border-radius:6px;
+    font-weight:600;font-size:0.95rem;text-decoration:none;
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+    border:1px solid var(--border);
+  }
+  .btn-primary{background:var(--accent);color:#1a1305;border-color:var(--accent);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 22px -6px rgba(244,163,64,0.45);}
+  .btn-ghost{background:transparent;color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
 
-        /* Utilidades de diseño */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+  /* hero */
+  .hero{padding:96px 0 80px;text-align:center;}
+  .hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:700;margin:22px 0 18px;}
+  .hero h1 em{font-style:normal;color:var(--accent);}
+  .hero p{color:var(--muted);max-width:620px;margin:0 auto 34px;font-size:1.08rem;}
+  .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+  .ruler{
+    display:flex;align-items:center;justify-content:center;gap:6px;
+    margin-top:56px;color:var(--muted);font-size:0.75rem;
+  }
+  .ruler .line{height:1px;width:64px;background:var(--border);}
 
-        .section-title {
-            text-align: center;
-            font-size: 2.25rem;
-            font-weight: 800;
-            margin-bottom: 12px;
-            background: linear-gradient(to right, #fff, var(--text-muted));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+  /* sections */
+  section{padding:72px 0;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;color:var(--accent);
+    font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;
+    text-align:center;margin-bottom:10px;
+  }
+  .section-title{text-align:center;font-size:clamp(1.5rem,3vw,2.1rem);font-weight:700;margin-bottom:44px;}
 
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            margin-bottom: 50px;
-            font-size: 1.1rem;
-        }
+  .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
+  .card{padding:30px 28px;}
+  .card h3{font-size:1.15rem;margin:14px 0 10px;}
+  .card p{color:var(--muted);font-size:0.94rem;}
+  .idx{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--muted);}
 
-        .gradient-text {
-            background: var(--gradient-accent);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+  /* pricing */
+  .pricing-card{display:flex;flex-direction:column;justify-content:space-between;padding:32px 28px;}
+  .pricing-card.featured{border-color:var(--accent);}
+  .plan-label{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--accent);letter-spacing:0.06em;text-transform:uppercase;}
+  .pricing-card h3{font-size:1.25rem;margin:10px 0 6px;}
+  .pricing-card .desc{color:var(--muted);font-size:0.92rem;margin-bottom:14px;}
+  .price{font-family:'Space Grotesk',sans-serif;font-size:2.1rem;font-weight:700;margin-bottom:18px;}
+  .price span{font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--muted);font-weight:400;}
+  .features{list-style:none;margin-bottom:26px;}
+  .features li{color:var(--muted);font-size:0.9rem;padding-left:20px;position:relative;margin-bottom:10px;}
+  .features li::before{content:"—";position:absolute;left:0;color:var(--accent);}
 
-        /* Botones */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 14px 28px;
-            border-radius: 99px;
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: var(--transition);
-            cursor: pointer;
-            border: none;
-        }
+  /* contact */
+  .contact{text-align:center;}
+  .contact-box{padding:56px 30px;text-align:center;}
+  .contact-box h2{font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:14px;}
+  .contact-box p{color:var(--muted);margin-bottom:30px;}
 
-        .btn-primary {
-            background: var(--gradient-accent);
-            color: #ffffff;
-            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
-        }
+  footer{padding:32px 0;text-align:center;color:var(--muted);font-size:0.85rem;border-top:1px solid var(--border);}
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px -5px rgba(99, 102, 241, 0.6);
-        }
+  @media (max-width:640px){
+    .hero{padding:72px 0 56px;}
+    .btn{width:100%;justify-content:center;}
+    .hero-cta{flex-direction:column;}
+  }
 
-        .btn-outline {
-            background: transparent;
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--primary);
-        }
-
-        /* Navegación */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 100;
-            backdrop-filter: blur(12px);
-            background: rgba(11, 15, 25, 0.8);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 80px;
-        }
-
-        .logo {
-            font-weight: 800;
-            font-size: 1.4rem;
-            color: var(--text-main);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .logo-dot {
-            width: 10px;
-            height: 10px;
-            background: var(--accent);
-            border-radius: 50%;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover {
-            color: var(--text-main);
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 170px 0 100px;
-            text-align: center;
-            position: relative;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            padding: 6px 16px;
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 99px;
-            color: #818cf8;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            line-height: 1.15;
-            margin-bottom: 20px;
-            letter-spacing: -0.02em;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 680px;
-            margin: 0 auto 36px;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        /* Servicios */
-        .services-section {
-            padding: 100px 0;
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 36px;
-            border-radius: var(--radius-lg);
-            transition: var(--transition);
-        }
-
-        .card:hover {
-            background: var(--bg-card-hover);
-            transform: translateY(-5px);
-            border-color: rgba(99, 102, 241, 0.3);
-        }
-
-        .card-icon {
-            width: 52px;
-            height: 52px;
-            background: rgba(99, 102, 241, 0.1);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-            color: #818cf8;
-        }
-
-        .card h3 {
-            font-size: 1.35rem;
-            margin-bottom: 12px;
-            font-weight: 700;
-        }
-
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* Razones para contratarme */
-        .reasons-section {
-            padding: 100px 0;
-            background: rgba(255, 255, 255, 0.01);
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .reason-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: rgba(255, 255, 255, 0.1);
-            margin-bottom: 12px;
-            background: var(--gradient-accent);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Precios */
-        .pricing-section {
-            padding: 100px 0;
-        }
-
-        .pricing-card {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .pricing-card.featured {
-            border-color: var(--primary);
-            box-shadow: 0 0 40px -10px rgba(99, 102, 241, 0.3);
-        }
-
-        .pricing-badge {
-            position: absolute;
-            top: -12px;
-            right: 24px;
-            background: var(--gradient-accent);
-            color: #fff;
-            padding: 4px 12px;
-            border-radius: 99px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .price {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin: 20px 0;
-        }
-
-        .price span {
-            font-size: 1rem;
-            color: var(--text-muted);
-            font-weight: 400;
-        }
-
-        .features-list {
-            list-style: none;
-            margin-bottom: 32px;
-        }
-
-        .features-list li {
-            margin-bottom: 12px;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .features-list li::before {
-            content: "✓";
-            color: var(--accent);
-            font-weight: bold;
-        }
-
-        /* Contacto Banner */
-        .contact-section {
-            padding: 100px 0;
-            text-align: center;
-        }
-
-        .contact-box {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            padding: 60px 24px;
-            border-radius: 24px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .contact-box h2 {
-            font-size: 2.25rem;
-            margin-bottom: 16px;
-            font-weight: 800;
-        }
-
-        .contact-box p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 32px;
-        }
-
-        /* Footer */
-        footer {
-            padding: 40px 0;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        /* Adaptabilidad (Responsive Design) */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none; /* Simplificado para landing de una sola página */
-            }
-
-            .hero h1 {
-                font-size: 2.4rem;
-            }
-
-            .hero p {
-                font-size: 1.05rem;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .hero-cta {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-            }
-        }
-    </style>
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
 </head>
 <body>
 
-    <!-- Navegación -->
-    <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo">
-                    Uriel Platini <span class="logo-dot"></span>
-                </a>
-                <ul class="nav-links">
-                    <li><a href="#servicios">Servicios</a></li>
-                    <li><a href="#ventajas">¿Por qué elegirme?</a></li>
-                    <li><a href="#precios">Precios</a></li>
-                </ul>
-                <a href="mailto:urielplatini@gmail.com?subject=Consulta%20sobre%20sitio%20web" class="btn btn-outline" style="padding: 10px 20px; font-size: 0.9rem;">Contacto</a>
-            </nav>
+<header>
+  <div class="wrap">
+    <div class="brand">Uriel Garbagnate <span>·</span> Dev Web</div>
+    <a href="mailto:urielplatini@gmail.com?subject=Consulta%20sobre%20sitio%20web" class="btn btn-ghost">Escribime</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <span class="tag">WordPress · WooCommerce · TiendaNube</span>
+      <h1>Sitios y tiendas online, construidos <em>a medida</em>, no armados con plantillas.</h1>
+      <p>Desarrollo el sitio o la tienda de tu negocio de punta a punta: diseño, funcionamiento y todo lo que necesita andar bien — envíos, pagos, stock — sin vueltas.</p>
+      <div class="hero-cta">
+        <a href="mailto:urielplatini@gmail.com?subject=Quiero%20iniciar%20un%20proyecto" class="btn btn-primary">Iniciar un proyecto →</a>
+        <a href="#precios" class="btn btn-ghost">Ver precios</a>
+      </div>
+      <div class="ruler mono"><span class="line"></span> hecho en Santa Fe, Argentina <span class="line"></span></div>
+    </div>
+  </section>
+
+  <section id="servicios">
+    <div class="wrap">
+      <p class="eyebrow">Servicios</p>
+      <h2 class="section-title">Lo que puedo hacer por tu negocio</h2>
+      <div class="grid-3">
+        <div class="plate card">
+          <span class="idx">// sitio</span>
+          <h3>Sitios WordPress a medida</h3>
+          <p>Páginas institucionales o de presentación, con diseño propio y carga rápida. Nada de plantillas recicladas.</p>
         </div>
-    </header>
-
-    <main>
-        <!-- Sección Hero / Inicio -->
-        <section class="hero">
-            <div class="container">
-                <span class="hero-badge">Desarrollo Web Profesional</span>
-                <h1>Transformo tus ideas en <span class="gradient-text">sitios web únicos</span> y rentables</h1>
-                <p>Diseño y creo páginas web modernas, ultrarrápidas y optimizadas para convertir visitas en clientes reales. Todo hecho 100% a la medida de tu proyecto.</p>
-                <div class="hero-cta">
-                    <a href="mailto:urielplatini@gmail.com?subject=Proyecto%20Web%20-%20Consulta" class="btn btn-primary">
-                        Iniciar un proyecto
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                    </a>
-                    <a href="#precios" class="btn btn-outline">Ver planes y precios</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sección Servicios -->
-        <section class="services-section" id="servicios">
-            <div class="container">
-                <h2 class="section-title">Servicios a tu Medida</h2>
-                <p class="section-subtitle">Soluciones digitales adaptadas a los objetivos de tu negocio</p>
-                
-                <div class="grid-3">
-                    <div class="card">
-                        <div class="card-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                        </div>
-                        <h3>Landing Pages</h3>
-                        <p>Páginas de aterrizaje enfocadas en ventas directas o captación de leads. Estructura optimizada para máxima conversión de usuarios.</p>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                        </div>
-                        <h3>Sitios Corporativos</h3>
-                        <p>Presencia institucional sólida y profesional. Ideal para empresas, profesionales independientes, agencias y consultores.</p>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-                        </div>
-                        <h3>Tiendas Online (E-Commerce)</h3>
-                        <p>Sistemas para vender tus productos online las 24 horas. Pasarelas de pago integradas, carrito de compras y panel autoadministrable.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sección 3 Razones para Contratarme -->
-        <section class="reasons-section" id="ventajas">
-            <div class="container">
-                <h2 class="section-title">¿Por qué trabajar conmigo?</h2>
-                <p class="section-subtitle">Tres pilares que marcan la diferencia en el resultado final</p>
-
-                <div class="grid-3">
-                    <div class="card">
-                        <div class="reason-number">01</div>
-                        <h3>Diseño 100% Personalizado</h3>
-                        <p>No utilizo plantillas genéricas sobrecargadas. Creo cada sitio web partiendo desde cero, alineado exactamente a la identidad visual y los objetivos de tu marca.</p>
-                    </div>
-
-                    <div class="card">
-                        <div class="reason-number">02</div>
-                        <h3>Velocidad y Adaptabilidad</h3>
-                        <p>Páginas ultrarrápidas que cargan en segundos y responden de forma fluida tanto en teléfonos móviles como en monitores de alta resolución.</p>
-                    </div>
-
-                    <div class="card">
-                        <div class="reason-number">03</div>
-                        <h3>Trato Directo y Personalizado</h3>
-                        <p>Tratas conmigo de principio a fin, sin intermediarios. Garantizo comunicación clara, tiempos de entrega puntuales y soporte técnico post-entrega.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sección Precios -->
-        <section class="pricing-section" id="precios">
-            <div class="container">
-                <h2 class="section-title">Planes y Precios</h2>
-                <p class="section-subtitle">Inversiones transparentes adaptadas a cada etapa de tu proyecto</p>
-
-                <div class="grid-3">
-                    <!-- Plan 1 -->
-                    <div class="card pricing-card">
-                        <div>
-                            <h3>Landing Page</h3>
-                            <p style="margin-bottom: 0;">Ideal para campañas o lanzamientos específicos.</p>
-                            <div class="price">$150 <span>USD</span></div>
-                            <ul class="features-list">
-                                <li>Sección única bien estructurada</li>
-                                <li>Diseño adaptado a celulares</li>
-                                <li>Botón a WhatsApp / Email</li>
-                                <li>Optimización básica SEO</li>
-                                <li>Entrega rápida</li>
-                            </ul>
-                        </div>
-                        <a href="mailto:urielplatini@gmail.com?subject=Consulta%20Plan%20Landing%20Page" class="btn btn-outline" style="width: 100%;">Elegir Plan</a>
-                    </div>
-
-                    <!-- Plan 2 (Destacado) -->
-                    <div class="card pricing-card featured">
-                        <span class="pricing-badge">Más Popular</span>
-                        <div>
-                            <h3>Sitio Profesional</h3>
-                            <p style="margin-bottom: 0;">Para negocios que buscan credibilidad total.</p>
-                            <div class="price">$350 <span>USD</span></div>
-                            <ul class="features-list">
-                                <li>Hasta 5 secciones internas</li>
-                                <li>Diseño web a medida exclusivo</li>
-                                <li>Formulario de contacto funcional</li>
-                                <li>Velocidad de carga optimizada</li>
-                                <li>Integración con redes sociales</li>
-                                <li>Soporte técnico por 30 días</li>
-                            </ul>
-                        </div>
-                        <a href="mailto:urielplatini@gmail.com?subject=Consulta%20Plan%20Sitio%20Profesional" class="btn btn-primary" style="width: 100%;">Elegir Plan</a>
-                    </div>
-
-                    <!-- Plan 3 -->
-                    <div class="card pricing-card">
-                        <div>
-                            <h3>A Medida / E-Commerce</h3>
-                            <p style="margin-bottom: 0;">Para tiendas virtuales o proyectos complejos.</p>
-                            <div class="price">Cotizar <span>según proyecto</span></div>
-                            <ul class="features-list">
-                                <li>Tienda online con carrito de compras</li>
-                                <li>Integración de pagos locales/globales</li>
-                                <li>Catálogo autoadministrable</li>
-                                <li>Funcionalidades avanzadas</li>
-                                <li>Asesoría y soporte continuo</li>
-                            </ul>
-                        </div>
-                        <a href="mailto:urielplatini@gmail.com?subject=Consulta%20Plan%20A%20Medida" class="btn btn-outline" style="width: 100%;">Cotizar Proyecto</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sección de Contacto Directo -->
-        <section class="contact-section">
-            <div class="container">
-                <div class="contact-box">
-                    <h2>¿Tienes una idea en mente?</h2>
-                    <p>Envíame un mensaje hoy mismo y conversemos sobre cómo llevar tu presencia web al siguiente nivel.</p>
-                    <a href="mailto:urielplatini@gmail.com?subject=Consulta%20desde%20la%20Web" class="btn btn-primary" style="font-size: 1.1rem; padding: 16px 36px;">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                        Escribir a urielplatini@gmail.com
-                    </a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Uriel Platini. Todos los derechos reservados. Desarrollo Web a Medida.</p>
+        <div class="plate card">
+          <span class="idx">// tienda</span>
+          <h3>Tiendas online (WooCommerce / TiendaNube)</h3>
+          <p>Tu catálogo funcionando 24 horas: carrito, medios de pago y panel para que administres todo vos mismo.</p>
         </div>
-    </footer>
+        <div class="plate card">
+          <span class="idx">// integración</span>
+          <h3>Envíos, pagos y automatizaciones</h3>
+          <p>Correo Argentino, pasarelas de pago, notificaciones por WhatsApp o mail: hago que tu tienda hable con las herramientas que ya usás.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="ventajas">
+    <div class="wrap">
+      <p class="eyebrow">Por qué conmigo</p>
+      <h2 class="section-title">Tres razones para trabajar juntos</h2>
+      <div class="grid-3">
+        <div class="plate card">
+          <span class="idx mono">01</span>
+          <h3>Trato directo</h3>
+          <p>Hablás conmigo de principio a fin. Sin intermediarios, sin cadena de mails que se pierde.</p>
+        </div>
+        <div class="plate card">
+          <span class="idx mono">02</span>
+          <h3>Especialista en e-commerce real</h3>
+          <p>No es solo "hacer una página": entiendo de logística, envíos y stock porque trabajé del otro lado del mostrador.</p>
+        </div>
+        <div class="plate card">
+          <span class="idx mono">03</span>
+          <h3>Soporte después de la entrega</h3>
+          <p>El sitio no queda tirado el día que se publica. Te acompaño con ajustes y arreglos después del lanzamiento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="precios">
+    <div class="wrap">
+      <p class="eyebrow">Precios</p>
+      <h2 class="section-title">Planes claros, sin sorpresas</h2>
+      <div class="grid-3">
+        <div class="plate pricing-card">
+          <div>
+            <span class="plan-label">Plan 01</span>
+            <h3>Landing Page</h3>
+            <p class="desc">Para una campaña o lanzamiento puntual.</p>
+            <div class="price">$150 <span>USD</span></div>
+            <ul class="features">
+              <li>Una sola sección, bien resuelta</li>
+              <li>Adaptado a celular</li>
+              <li>Botón directo a WhatsApp o mail</li>
+              <li>SEO básico</li>
+              <li>Entrega rápida</li>
+            </ul>
+          </div>
+          <a href="mailto:urielplatini@gmail.com?subject=Consulta%20Plan%20Landing%20Page" class="btn btn-ghost" style="width:100%;">Elegir plan</a>
+        </div>
+
+        <div class="plate pricing-card featured">
+          <div>
+            <span class="plan-label">Plan 02 · el más elegido</span>
+            <h3>Sitio Profesional</h3>
+            <p class="desc">Para el negocio que necesita presencia sólida.</p>
+            <div class="price">$350 <span>USD</span></div>
+            <ul class="features">
+              <li>Hasta 5 secciones internas</li>
+              <li>Diseño exclusivo, no plantilla</li>
+              <li>Formulario de contacto funcional</li>
+              <li>Redes sociales integradas</li>
+              <li>30 días de soporte incluido</li>
+            </ul>
+          </div>
+          <a href="mailto:urielplatini@gmail.com?subject=Consulta%20Plan%20Sitio%20Profesional" class="btn btn-primary" style="width:100%;">Elegir plan</a>
+        </div>
+
+        <div class="plate pricing-card">
+          <div>
+            <span class="plan-label">Plan 03</span>
+            <h3>Tienda / a medida</h3>
+            <p class="desc">Para tiendas online o proyectos más complejos.</p>
+            <div class="price">A cotizar <span>según proyecto</span></div>
+            <ul class="features">
+              <li>Carrito y medios de pago</li>
+              <li>Catálogo autoadministrable</li>
+              <li>Integraciones de envío</li>
+              <li>Acompañamiento continuo</li>
+            </ul>
+          </div>
+          <a href="mailto:urielplatini@gmail.com?subject=Consulta%20Plan%20a%20Medida" class="btn btn-ghost" style="width:100%;">Cotizar proyecto</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="wrap">
+      <div class="plate contact-box">
+        <h2>¿Tenés una idea para tu sitio?</h2>
+        <p>Contame de qué se trata tu negocio y vemos juntos cómo llevarlo a internet.</p>
+        <a href="mailto:urielplatini@gmail.com?subject=Consulta%20desde%20la%20web" class="btn btn-primary" style="font-size:1.05rem;padding:15px 32px;">Escribir a urielplatini@gmail.com</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>&copy; 2026 Uriel Garbagnate. Desarrollo web a medida — Santa Fe, Argentina.</p>
+  </div>
+</footer>
 
 </body>
 </html>
